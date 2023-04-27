@@ -5,11 +5,13 @@
     typedef uint64_t Datum;
 
      constexpr unsigned bits_needed(u64 domain_size) {
-        unsigned bits = 0;
-        while (domain_size > 0) {
-			domain_size >> 1;
-			++bits;
-		}
-		return bits;
+         u64 size = domain_size - 1;
+         unsigned bits = 0;
+         while (size > 0) {
+             ++bits;
+             size >>= 1;
+         }
+         return bits;
     }
+
 #endif
