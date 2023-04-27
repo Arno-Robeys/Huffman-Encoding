@@ -14,4 +14,8 @@
          return bits;
     }
 
+     constexpr unsigned bytes_needed(u64 domain_size) {
+		return (bits_needed(domain_size) + 7) / 8;
+	 }
+
 #endif

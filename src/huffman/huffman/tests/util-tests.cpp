@@ -19,4 +19,15 @@ TEST_CASE("Bits needed")
    REQUIRE(bits_needed(1'000'000) == 20);
 }
 
+TEST_CASE("Bytes needed")
+{
+	REQUIRE(bytes_needed(2) == 1);
+	REQUIRE(bytes_needed(128) == 1);
+	REQUIRE(bytes_needed(129) == 1);
+	REQUIRE(bytes_needed(255) == 1);
+	REQUIRE(bytes_needed(256) == 1);
+	REQUIRE(bytes_needed(257) == 2);
+	REQUIRE(bytes_needed(1'000'000) == 3);
+}
+
 #endif
