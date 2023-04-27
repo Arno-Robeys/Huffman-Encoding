@@ -5,6 +5,7 @@
 */
 
 #include <iostream>
+#include "util.h"
 
 
 /*
@@ -13,6 +14,7 @@
 */
 int main()
 {
+    bits_needed(4);
 #ifdef NDEBUG
     std::cout << "You are running the release build" << std::endl;
 #else
