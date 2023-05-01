@@ -5,7 +5,7 @@
 */
 
 #include <iostream>
-#include "util.h"
+#include "data/frequency-table.h"
 
 
 /*
@@ -14,7 +14,6 @@
 */
 int main()
 {
-    bits_needed(129);
 #ifdef NDEBUG
     std::cout << "You are running the release build" << std::endl;
 #else

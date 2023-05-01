@@ -199,6 +199,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="catch.hpp" />
+    <ClInclude Include="data\frequency-table.h" />
     <ClInclude Include="easylogging++.h" />
   </ItemGroup>
   <ItemGroup>
