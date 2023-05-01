@@ -5,7 +5,7 @@
 */
 
 #include <iostream>
-#include "data/frequency-table.h"
+#include "data/binary-tree.h"
 
 
 /*

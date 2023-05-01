@@ -26,10 +26,5 @@ TEST_CASE("Frequency Table")
 
 
 }
-/*
-TEST_CASE("Failing test")
-{
-    //REQUIRE(1 == 2);
-}*/
 
 #endif
