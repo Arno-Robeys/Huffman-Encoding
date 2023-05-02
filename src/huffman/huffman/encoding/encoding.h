@@ -4,6 +4,9 @@
 #include "util.h"
 #include <io/memory-buffer.h>
 
+#include <iostream>
+#include "io/binary-io.h"
+
 namespace encoding {
 
 	class EncodingImplementation {

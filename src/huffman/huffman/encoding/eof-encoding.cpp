@@ -1,4 +1,6 @@
 #include "eof-encoding.h"
+#include "io/memory-buffer.h"
+
 
 namespace {
 
@@ -12,19 +14,19 @@ namespace {
 
 		void encode(io::InputStream& input, io::OutputStream& output) override {
 			while (!input.end_reached()) {
-				auto value = io::read_bits(domain_size, input);
-				io::write_bits(value, domain_size, output);
+				auto value = input.read();
+				output.write(value);
 			}
-			io::write_bits(domain_size+1, 1, output);
-			
+			output.write(domain_size);
 		}
+
 		void decode(io::InputStream& input, io::OutputStream& output) override {
-			while (!input.end_reached()) {
-				auto value = io::read_bits(domain_size+1, input);
-				if (value == domain_size+1) {
+			while (true) {
+				auto value = input.read();
+				if (value == domain_size) {
 					break;
 				}
-				io::write_bits(value, domain_size, output);
+				output.write(value);
 			}
 		}
 	};

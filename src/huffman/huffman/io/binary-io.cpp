@@ -3,19 +3,26 @@
 namespace io {
 
     u64 read_bits(unsigned nbits, InputStream& input) {
-        u64 result = 0;
+		
+		u64 result = 0;
 		for (unsigned i = 0; i < nbits; i++) {
 			result <<= 1;
 			result |= input.read();
 		}
 		return result;
 
+		/*if (nbits == 1) {
+			return input.read();
+		} else {
+			if (input.end_reached() && nbits > 0) {
+				return 0;
+			}else {
+				auto x = input.read() << (nbits - 1);
+				auto y = read_bits(nbits - 1, input);
+				return x | y;
+			}
+		}*/
 
-		/* Werkt ook maar enkel met write_bits van hieronder in commentaar
-		for (unsigned i = 0; i < nbits; i++) {
-			result |= u64(input.read()) << i;
-		}
-		return result;*/
     }
 
 	void write_bits(u64 value, unsigned nbits, io::OutputStream& output) {
@@ -23,11 +30,6 @@ namespace io {
 		for (int i = nbits - 1; i >= 0; i--) {
 			output.write((value >> i) & 1);
 		}
-		/* Werkt ook maar enkel met read_bits van hierboven in commentaar
-		for (unsigned i = 0; i < nbits; i++) {
-			output.write(value & 1);
-			value >>= 1;
-		}*/
 	}
 	
 }
