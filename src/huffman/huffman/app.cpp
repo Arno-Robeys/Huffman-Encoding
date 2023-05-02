@@ -5,7 +5,7 @@
 */
 
 #include <iostream>
-#include "data/binary-tree.h"
+#include "encoding/encoding.h"
 
 
 /*

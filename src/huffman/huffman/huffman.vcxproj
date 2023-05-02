@@ -202,6 +202,7 @@
     <ClInclude Include="data\binary-tree.h" />
     <ClInclude Include="data\frequency-table.h" />
     <ClInclude Include="easylogging++.h" />
+    <ClInclude Include="encoding\encoding.h" />
     <ClInclude Include="io\binary-io.h" />
     <ClInclude Include="io\data-endpoints.h" />
     <ClInclude Include="io\files.h" />
