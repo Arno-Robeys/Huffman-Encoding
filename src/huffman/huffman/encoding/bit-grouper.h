@@ -8,7 +8,7 @@ namespace encoding {
 	template<unsigned GROUP_SIZE>
 	encoding::Encoding<2, 1 << GROUP_SIZE>bit_grouper()
 	{
-		return encoding::Encoding<2, 1 << GROUP_SIZE>(create_bit_grouper_implementation(GROUP_SIZE));
+		return create_bit_grouper_implementation(GROUP_SIZE);
 	}
 }
 

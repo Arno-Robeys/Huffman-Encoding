@@ -65,14 +65,49 @@ TEST_CASE("Bit Grouper Encoding") {
 
 }
 
-TEST_CASE("Encodding Combinar") {
+TEST_CASE("Encoding Combiner Bitgrouper + EOF") {
 	io::MemoryBuffer<2> buffer;
-	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<257> buffer2;
 	io::MemoryBuffer<2> buffer3;
-	
+
+	io::write_bits(69, 8, *buffer.destination()->create_output_stream());
 
 	const auto bitgrouper = encoding::bit_grouper<8>();
-	const auto eofencoding = encoding::eof_encoding<8>();
+	const auto eofencoding = encoding::eof_encoding<256>();
+	const auto combined = bitgrouper | eofencoding;
+	encode(buffer.source(), combined, buffer2.destination());
+
+	REQUIRE(buffer2.data()->size() == 2);
+	REQUIRE(buffer2.data()->begin()[0] == 'E');
+	REQUIRE(buffer2.data()->back() == 256);
+
+	decode(buffer2.source(), combined, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+	REQUIRE(buffer.data()->begin()[0] == buffer3.data()->begin()[0]);
+
+}
+
+TEST_CASE("Encoding Combiner EOF") {
+	io::MemoryBuffer<17> buffer;
+	io::MemoryBuffer<19> buffer2;
+	io::MemoryBuffer<17> buffer3;
+	io::write_bits(69, 8, *buffer.destination()->create_output_stream());
+
+	const auto eofencoding = encoding::eof_encoding<17>();
+	const auto eofencoding2 = encoding::eof_encoding<18>();
+	const auto combined = eofencoding | eofencoding2;
+
+	encode(buffer.source(), combined, buffer2.destination());
+
+	REQUIRE(buffer2.data()->size() == 10);
+	REQUIRE(buffer2.data()->begin()[8] == 17);
+	REQUIRE(buffer2.data()->back() == 18);
+
+	decode(buffer2.source(), combined, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+	REQUIRE(buffer.data()->begin()[0] == buffer3.data()->begin()[0]);
 
 }
 
