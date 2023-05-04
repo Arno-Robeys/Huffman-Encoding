@@ -3,6 +3,7 @@
 #include "catch.hpp"
 #include "encoding/eof-encoding.h"
 #include "encoding/bit-grouper.h"
+#include "encoding/encoding-combiner.h"
 #include <iostream>
 
 
@@ -48,27 +49,30 @@ TEST_CASE("Bit Grouper Encoding") {
 	io::write_bits(70, 8, *output);
 	io::write_bits(69, 8, *output);
 
-	unsigned char foo = *buffer.data()->begin();
-	std::cout << "Buffer First Before Encode: " <<  foo << std::endl;
-	std::cout << "Buffer Last Before Encode: " << buffer.data()->back() << std::endl;
+	REQUIRE(buffer.data()->size() == 16);
 
 	const auto bitgrouper = encoding::bit_grouper<8>();
 	encode(buffer.source(), bitgrouper, buffer2.destination());
-
-	std::cout << "Buffer First: " << buffer2.data()->begin()[0] << std::endl;
-	std::cout << "Buffer Last: " << buffer2.data()->back() << std::endl;
 
 	REQUIRE(buffer2.data()->begin()[0] == 'F');
 	REQUIRE(buffer2.data()->back() == 'E');
 
 	decode(buffer2.source(), bitgrouper, buffer3.destination());
 
-	std::cout << "Buffer First After Decode: " << buffer3.data()->begin()[0] << std::endl;
-	std::cout << "Buffer Last After Decode: " << buffer3.data()->back() << std::endl;
-
 	REQUIRE(buffer.data()->begin()[0] == buffer3.data()->begin()[0]);
 	REQUIRE(buffer.data()->back() == buffer3.data()->back());
 
+
+}
+
+TEST_CASE("Encodding Combinar") {
+	io::MemoryBuffer<2> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<2> buffer3;
+	
+
+	const auto bitgrouper = encoding::bit_grouper<8>();
+	const auto eofencoding = encoding::eof_encoding<8>();
 
 }
 
