@@ -202,6 +202,8 @@
     <ClInclude Include="data\binary-tree.h" />
     <ClInclude Include="data\frequency-table.h" />
     <ClInclude Include="easylogging++.h" />
+    <ClInclude Include="encoding\bit-grouper.h" />
+    <ClInclude Include="encoding\encoding-combiner.h" />
     <ClInclude Include="encoding\encoding.h" />
     <ClInclude Include="encoding\eof-encoding.h" />
     <ClInclude Include="io\binary-io.h" />
@@ -213,6 +215,7 @@
   <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="easylogging++.cc" />
+    <ClCompile Include="encoding\bit-grouper.cpp" />
     <ClCompile Include="encoding\eof-encoding.cpp" />
     <ClCompile Include="io\binary-io.cpp" />
     <ClCompile Include="io\files.cpp" />
