@@ -206,6 +206,7 @@
     <ClInclude Include="encoding\encoding-combiner.h" />
     <ClInclude Include="encoding\encoding.h" />
     <ClInclude Include="encoding\eof-encoding.h" />
+    <ClInclude Include="encoding\huffman\tree-encoding.h" />
     <ClInclude Include="io\binary-io.h" />
     <ClInclude Include="io\data-endpoints.h" />
     <ClInclude Include="io\files.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="easylogging++.cc" />
     <ClCompile Include="encoding\bit-grouper.cpp" />
     <ClCompile Include="encoding\eof-encoding.cpp" />
+    <ClCompile Include="encoding\huffman\tree-encoding.cpp" />
     <ClCompile Include="io\binary-io.cpp" />
     <ClCompile Include="io\files.cpp" />
     <ClCompile Include="logging.cpp" />
@@ -224,6 +226,7 @@
     <ClCompile Include="tests\binary-tree-tests.cpp" />
     <ClCompile Include="tests\encoding-tests.cpp" />
     <ClCompile Include="tests\frequency-table-tests.cpp" />
+    <ClCompile Include="tests\huffman-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
     <ClCompile Include="tests\type-selection-tests.cpp" />
     <ClCompile Include="tests\util-tests.cpp" />

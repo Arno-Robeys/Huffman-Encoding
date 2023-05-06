@@ -5,7 +5,9 @@
 #include <cassert>
 #include <memory>
 #include <functional>
+
 namespace data {
+
 		template<typename T>
 		class Node {
 		public:
