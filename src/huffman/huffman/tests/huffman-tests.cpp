@@ -36,3 +36,33 @@ TEST_CASE("Copy to vector") {
 	}
 
 }
+
+TEST_CASE("Buildtree & Buildcodes") {
+	auto freqtable = data::FrequencyTable<Datum>();
+	freqtable.increment(1);
+	freqtable.increment(1);
+	freqtable.increment(2);
+	freqtable.increment(3);
+
+	auto root = encoding::huffman::build_tree(freqtable);
+
+	auto codes = encoding::huffman::build_codes(root);
+
+	/*for (auto const& pair : codes) {
+		std::string s = "";
+		for (auto const& bit : pair.second) {
+			s.append(std::to_string(bit));
+		}
+		
+		std::cout << pair.first << " : " << s << std::endl;
+	}*/
+
+	REQUIRE(std::prev(codes.end(), 3)->first == 1);
+	REQUIRE(std::prev(codes.end(), 2)->first == 2);
+	REQUIRE(std::prev(codes.end(), 1)->first == 3);
+	REQUIRE(std::prev(codes.end(), 3)->second.size() == 1);
+	REQUIRE(std::prev(codes.end(), 2)->second.size() == 2);
+	REQUIRE(std::prev(codes.end(), 1)->second.size() == 2);
+
+
+}
