@@ -2,6 +2,7 @@
 
 #include "catch.hpp"
 #include "data/frequency-table.h"
+#include "io/memory-buffer.h"
 
 
 TEST_CASE("Frequency Table")

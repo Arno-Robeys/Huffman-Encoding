@@ -7,12 +7,12 @@ namespace encoding  {
 			void encode_tree(const data::Node<Datum>& tree, int numberOfBitsPerDatum, io::OutputStream& output) {
 
 				if (const data::Leaf<Datum>* leaf = dynamic_cast<const data::Leaf<Datum>*>(&tree)) {
-					//If tree is a leaf, write 1 and then the value of the leaf
+					//If tree is a leaf, write 0 and then the value of the leaf
 					output.write(0);
 					io::write_bits(leaf->get_value(), numberOfBitsPerDatum, output);
 				}
 				else if (const data::Branch<Datum>* branch = dynamic_cast<const data::Branch<Datum>*>(&tree)) {
-					//If tree is a branch, write 0 and then recursively encode its children
+					//If tree is a branch, write 1 and then recursively encode its children
 					output.write(1);
 					encode_tree(branch->get_left_child(), numberOfBitsPerDatum, output);
 					encode_tree(branch->get_right_child(), numberOfBitsPerDatum, output);
