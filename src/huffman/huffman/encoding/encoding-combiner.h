@@ -11,7 +11,7 @@ namespace encoding {
 		EncodingCombinerImplementation(Encoding<N1,N2> first, Encoding<N2,N3> second) : first{first}, second{second} {}
 		
 		void encode(io::InputStream& input, io::OutputStream& output) override {
-			auto tempbuffer = io::MemoryBuffer<N1>();
+			auto tempbuffer = io::MemoryBuffer<N2>();
 			auto tempoutputstream = tempbuffer.destination()->create_output_stream();
 			auto tempinputstream = tempbuffer.source()->create_input_stream();
 
@@ -20,7 +20,7 @@ namespace encoding {
 		}
 		
 		void decode(io::InputStream& input, io::OutputStream& output) override {
-			auto tempbuffer = io::MemoryBuffer<N3>();
+			auto tempbuffer = io::MemoryBuffer<N2>();
 			auto tempoutputstream = tempbuffer.destination()->create_output_stream();
 			auto tempinputstream = tempbuffer.source()->create_input_stream();
 

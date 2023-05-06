@@ -40,6 +40,39 @@ TEST_CASE("Eof-Encoding ")
 	REQUIRE(buffer3.data().get()->at(3) == 16);
 }
 
+TEST_CASE("Eof encoding 256") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<257> buffer2;
+	io::MemoryBuffer<256> buffer3;;
+
+	buffer.data()->push_back(8);
+	buffer.data()->push_back(4);
+	buffer.data()->push_back(5);
+	buffer.data()->push_back(16);
+
+	const auto eofencoding = encoding::eof_encoding<256>();
+	encode(buffer.source(), eofencoding, buffer2.destination());
+
+
+	REQUIRE(buffer.data()->size() == buffer2.data()->size() - 1);
+	REQUIRE(buffer2.data().get()->at(0) == 8);
+	REQUIRE(buffer2.data().get()->at(1) == 4);
+	REQUIRE(buffer2.data().get()->at(2) == 5);
+	REQUIRE(buffer2.data().get()->at(3) == 16);
+	//EOF Check
+	REQUIRE(buffer2.data().get()->at(4) == 256);
+
+	const auto eofdecoding = encoding::eof_encoding<256>();
+	decode(buffer2.source(), eofdecoding, buffer3.destination());
+
+	REQUIRE(buffer2.data()->size() == buffer3.data()->size() + 1);
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+	REQUIRE(buffer3.data().get()->at(0) == 8);
+	REQUIRE(buffer3.data().get()->at(1) == 4);
+	REQUIRE(buffer3.data().get()->at(2) == 5);
+	REQUIRE(buffer3.data().get()->at(3) == 16);
+}
+
 TEST_CASE("Bit Grouper Encoding") {
 	io::MemoryBuffer<2> buffer;
 	io::MemoryBuffer<256> buffer2;

@@ -45,6 +45,8 @@ namespace {
 					output.write(bit);
 				}
 			}
+
+			//Totale Output 42 + 23??
 		}
 
 		virtual void decode(io::InputStream& input, io::OutputStream& output) override {}

@@ -6,8 +6,8 @@ namespace io {
 		
 		u64 result = 0;
 		for (unsigned i = 0; i < nbits; i++) {
-			result <<= 1;
-			result |= input.read();
+				result <<= 1;
+				result |= input.end_reached() ? 0 : input.read();
 		}
 		return result;
 

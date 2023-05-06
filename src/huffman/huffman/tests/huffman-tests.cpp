@@ -75,11 +75,16 @@ TEST_CASE("Huffman encode") {
 	io::MemoryBuffer<256> buffer2;
 	io::MemoryBuffer<256> buffer3;
 
+    io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+
 	auto eof = encoding::eof_encoding<256>();
 	auto huffman = encoding::huffman::huffman_encoding<257>();
 	auto group = encoding::bit_grouper<8>();
 	auto combiner = eof | huffman | group;
 
 	encode(buffer.source(), combiner, buffer2.destination());
+
+	//Checken of de grootte van de buffer kleiner is dan de grootte van de buffer2
+	REQUIRE(buffer.data()->size() > buffer2.data()->size());
 
 }
