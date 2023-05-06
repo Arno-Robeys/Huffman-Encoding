@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 #include "encoding/huffman\huffman-encoding.h"
+#include "encoding/eof-encoding.h"
+#include "encoding/bit-grouper.h"
+#include "encoding/encoding-combiner.h"
 
 TEST_CASE("Tree Encoding") {
 
@@ -64,5 +67,19 @@ TEST_CASE("Buildtree & Buildcodes") {
 	REQUIRE(std::prev(codes.end(), 2)->second.size() == 2);
 	REQUIRE(std::prev(codes.end(), 1)->second.size() == 2);
 
+
+}
+
+TEST_CASE("Huffman encode") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
 
 }

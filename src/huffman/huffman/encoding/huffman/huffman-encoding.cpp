@@ -2,23 +2,61 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
-#include <map>
+
+
+std::unique_ptr<data::Node<Datum>> build_writeable_tree(const data::Node<std::pair<Datum, u64>>& node) {
+	if (auto leaf = dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)) {
+		return std::make_unique<data::Leaf<Datum>>(leaf->get_value().first);
+	}
+	else if (auto branch = dynamic_cast<const data::Branch<std::pair<Datum, u64>>*>(&node)) {
+		std::unique_ptr<data::Node<Datum>> left = build_writeable_tree(branch->get_left_child());
+		std::unique_ptr<data::Node<Datum>> right = build_writeable_tree(branch->get_right_child());
+		return std::make_unique<data::Branch<Datum>>(std::move(left), std::move(right));
+	}
+	return nullptr;
+}
 
 namespace {
 	class HuffmanEncodingImplementation : public encoding::EncodingImplementation {
+
+	private: 	
+		Datum domain_size;
+
+	public:
+		HuffmanEncodingImplementation(Datum domain_size) : domain_size{ domain_size } {
+			assert(domain_size > 0);
+		}
 
 		virtual void encode(io::InputStream& input, io::OutputStream& output) override {
 			std::vector<Datum> data = copy_to_vector<Datum>(input);
 			data::FrequencyTable<Datum> frequency_table = data::count_frequencies(data);
 			std::unique_ptr<const data::Node<std::pair<Datum, u64>>> tree = encoding::huffman::build_tree(frequency_table);
 			std::map<Datum, std::vector<Datum>> codes = encoding::huffman::build_codes(tree);
+
+			auto domain_bits = bits_needed(domain_size);
+			auto tree_write = build_writeable_tree(*tree);
 			
+			encoding::huffman::encode_tree(*tree_write, domain_bits, output);
+			//Output 42??? ^^
+
+			for(auto& datum : data) {
+				auto code = codes[datum];
+				for (auto& bit : code) {
+					output.write(bit);
+				}
+			}
 		}
 
 		virtual void decode(io::InputStream& input, io::OutputStream& output) override {}
 	};
 
 }
+
+std::shared_ptr<encoding::EncodingImplementation> encoding::huffman::create_huffman_implementation(u64 domain_size)
+{
+	return std::make_shared<HuffmanEncodingImplementation>(domain_size);
+}
+
 
 template<typename T>
 std::vector<T> copy_to_vector(io::InputStream& input) {
