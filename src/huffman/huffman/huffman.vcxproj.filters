@@ -42,22 +42,22 @@
     <ClInclude Include="io\binary-io.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="encoding\encoding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="encoding\eof-encoding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="encoding\bit-grouper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="encoding\encoding-combiner.h">
+    <ClInclude Include="encoding\huffman\huffman-encoding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="encoding\huffman\tree-encoding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="encoding\huffman\huffman-encoding.h">
+    <ClInclude Include="encoding\bit-grouper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encoding\encoding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encoding\encoding-combiner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encoding\eof-encoding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,19 +101,19 @@
     <ClCompile Include="tests\encoding-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="encoding\eof-encoding.cpp">
+    <ClCompile Include="tests\huffman-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="encoding\bit-grouper.cpp">
+    <ClCompile Include="encoding\huffman\huffman-encoding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="encoding\huffman\tree-encoding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\huffman-tests.cpp">
+    <ClCompile Include="encoding\bit-grouper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="encoding\huffman\huffman-encoding.cpp">
+    <ClCompile Include="encoding\eof-encoding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

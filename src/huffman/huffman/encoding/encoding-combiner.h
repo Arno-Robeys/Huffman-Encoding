@@ -7,7 +7,6 @@ namespace encoding {
 	template<u64 N1, u64 N2, u64 N3>
 	class EncodingCombinerImplementation : public EncodingImplementation {
 	public:
-
 		EncodingCombinerImplementation(Encoding<N1,N2> first, Encoding<N2,N3> second) : first{first}, second{second} {}
 		
 		void encode(io::InputStream& input, io::OutputStream& output) override {

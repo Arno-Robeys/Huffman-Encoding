@@ -94,7 +94,7 @@ std::vector<T> copy_to_vector(io::InputStream& input) {
 	return data;
 }
 
-unsigned long int weight(data::Node<std::pair<Datum, u64>>& node) {
+Datum weight(data::Node<std::pair<Datum, u64>>& node) {
 	if (dynamic_cast<data::Leaf<std::pair<Datum, u64>>*>(&node) != nullptr) {
 		return dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)->get_value().second;
 	}
