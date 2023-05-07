@@ -51,15 +51,6 @@ TEST_CASE("Buildtree & Buildcodes") {
 
 	auto codes = encoding::huffman::build_codes(root);
 
-	/*for (auto const& pair : codes) {
-		std::string s = "";
-		for (auto const& bit : pair.second) {
-			s.append(std::to_string(bit));
-		}
-		
-		std::cout << pair.first << " : " << s << std::endl;
-	}*/
-
 	REQUIRE(std::prev(codes.end(), 3)->first == 1);
 	REQUIRE(std::prev(codes.end(), 2)->first == 2);
 	REQUIRE(std::prev(codes.end(), 1)->first == 3);
@@ -83,8 +74,54 @@ TEST_CASE("Huffman encode") {
 	auto combiner = eof | huffman | group;
 
 	encode(buffer.source(), combiner, buffer2.destination());
-
-	//Checken of de grootte van de buffer kleiner is dan de grootte van de buffer2
+	
 	REQUIRE(buffer.data()->size() > buffer2.data()->size());
+
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	auto result = io::read_bits(23, *buffer3.source()->create_input_stream());
+	REQUIRE(result == 4506811);
+
+}
+
+TEST_CASE("Huffman encode 2") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('E');
+	buffer.data()->push_back('S');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('H');
+	buffer.data()->push_back('U');
+	buffer.data()->push_back('F');
+	buffer.data()->push_back('F');
+	buffer.data()->push_back('M');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('N');
+	buffer.data()->push_back('C');
+	buffer.data()->push_back('O');
+	buffer.data()->push_back('D');
+	buffer.data()->push_back('I');
+	buffer.data()->push_back('N');
+	buffer.data()->push_back('G');
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+
 
 }

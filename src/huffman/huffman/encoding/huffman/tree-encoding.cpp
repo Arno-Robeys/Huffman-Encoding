@@ -21,7 +21,6 @@ namespace encoding  {
 			}
 
 			std::unique_ptr<data::Node<Datum>> decode_tree(int numberOfBitsPerDatum, io::InputStream& input) {
-				
 				if (!input.end_reached()) {
 					//Read the first bit
 					auto bit = input.read();

@@ -11,18 +11,6 @@ namespace io {
 		}
 		return result;
 
-		/*if (nbits == 1) {
-			return input.read();
-		} else {
-			if (input.end_reached() && nbits > 0) {
-				return 0;
-			}else {
-				auto x = input.read() << (nbits - 1);
-				auto y = read_bits(nbits - 1, input);
-				return x | y;
-			}
-		}*/
-
     }
 
 	void write_bits(u64 value, unsigned nbits, io::OutputStream& output) {

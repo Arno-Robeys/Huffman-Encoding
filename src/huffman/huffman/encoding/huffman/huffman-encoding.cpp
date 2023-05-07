@@ -4,19 +4,43 @@
 #include <memory>
 
 
-std::unique_ptr<data::Node<Datum>> build_writeable_tree(const data::Node<std::pair<Datum, u64>>& node) {
-	if (auto leaf = dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)) {
-		return std::make_unique<data::Leaf<Datum>>(leaf->get_value().first);
-	}
-	else if (auto branch = dynamic_cast<const data::Branch<std::pair<Datum, u64>>*>(&node)) {
-		std::unique_ptr<data::Node<Datum>> left = build_writeable_tree(branch->get_left_child());
-		std::unique_ptr<data::Node<Datum>> right = build_writeable_tree(branch->get_right_child());
-		return std::make_unique<data::Branch<Datum>>(std::move(left), std::move(right));
-	}
-	return nullptr;
-}
-
 namespace {
+
+	std::unique_ptr<data::Node<Datum>> build_writeable_tree(const data::Node<std::pair<Datum, u64>>& node) {
+		if (auto leaf = dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)) {
+			return std::make_unique<data::Leaf<Datum>>(leaf->get_value().first);
+		}
+		else if (auto branch = dynamic_cast<const data::Branch<std::pair<Datum, u64>>*>(&node)) {
+			std::unique_ptr<data::Node<Datum>> left = build_writeable_tree(branch->get_left_child());
+			std::unique_ptr<data::Node<Datum>> right = build_writeable_tree(branch->get_right_child());
+			return std::make_unique<data::Branch<Datum>>(std::move(left), std::move(right));
+		}
+		return nullptr;
+	}
+
+	Datum decode_single_datum(io::InputStream& input, const data::Node<Datum>& node) {
+		if (auto leaf = dynamic_cast<const data::Leaf<Datum>*>(&node)) {
+			return leaf->get_value();
+		}
+		else if (auto branch = dynamic_cast<const data::Branch<Datum>*>(&node)) {
+			auto bit = input.read();
+			if (bit == 0) {
+				return decode_single_datum(input, branch->get_left_child());
+			}
+			else {
+				return decode_single_datum(input, branch->get_right_child());
+			}
+		}
+		return 0;
+	}
+
+	void decode_bits(io::InputStream& input, const data::Node<Datum>& node, io::OutputStream& output) {
+		while (!input.end_reached()) {
+			auto datum = decode_single_datum(input, node);
+			output.write(datum);
+		}
+	}
+
 	class HuffmanEncodingImplementation : public encoding::EncodingImplementation {
 
 	private: 	
@@ -37,7 +61,6 @@ namespace {
 			auto tree_write = build_writeable_tree(*tree);
 			
 			encoding::huffman::encode_tree(*tree_write, domain_bits, output);
-			//Output 42??? ^^
 
 			for(auto& datum : data) {
 				auto code = codes[datum];
@@ -45,11 +68,13 @@ namespace {
 					output.write(bit);
 				}
 			}
-
-			//Totale Output 42 + 23??
 		}
 
-		virtual void decode(io::InputStream& input, io::OutputStream& output) override {}
+		virtual void decode(io::InputStream& input, io::OutputStream& output) override {
+			auto domain_bits = bits_needed(domain_size);
+			auto tree = encoding::huffman::decode_tree(domain_bits, input);
+			decode_bits(input, *tree, output);
+		}
 	};
 
 }
