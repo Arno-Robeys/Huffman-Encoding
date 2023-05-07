@@ -1,3 +1,4 @@
+#ifdef TEST_BUILD
 #include "catch.hpp"
 #include "encoding/huffman\tree-encoding.h"
 #include <iostream>
@@ -61,31 +62,6 @@ TEST_CASE("Buildtree & Buildcodes") {
 
 }
 
-TEST_CASE("Huffman encode") {
-	io::MemoryBuffer<256> buffer;
-	io::MemoryBuffer<256> buffer2;
-	io::MemoryBuffer<256> buffer3;
-
-    io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
-
-	auto eof = encoding::eof_encoding<256>();
-	auto huffman = encoding::huffman::huffman_encoding<257>();
-	auto group = encoding::bit_grouper<8>();
-	auto combiner = eof | huffman | group;
-
-	encode(buffer.source(), combiner, buffer2.destination());
-	
-	REQUIRE(buffer.data()->size() > buffer2.data()->size());
-
-	decode(buffer2.source(), combiner, buffer3.destination());
-
-	REQUIRE(buffer.data()->size() == buffer3.data()->size());
-
-	auto result = io::read_bits(23, *buffer3.source()->create_input_stream());
-	REQUIRE(result == 4506811);
-
-}
-
 TEST_CASE("Huffman encode 2") {
 	io::MemoryBuffer<256> buffer;
 	io::MemoryBuffer<256> buffer2;
@@ -122,6 +98,31 @@ TEST_CASE("Huffman encode 2") {
 	for (int i = 0; i < buffer.data()->size(); i++) {
 		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
 	}
+}
 
+TEST_CASE("Huffman encode") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+
+	REQUIRE(buffer.data()->size() > buffer2.data()->size());
+
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	auto result = io::read_bits(23, *buffer3.source()->create_input_stream());
+	REQUIRE(result == 4506811);
 
 }
+
+#endif

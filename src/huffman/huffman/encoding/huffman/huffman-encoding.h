@@ -24,6 +24,7 @@ namespace encoding {
 		std::unique_ptr<const data::Node<std::pair<Datum, u64>>> build_tree(data::FrequencyTable<Datum>& table);
 
 		std::map<Datum, std::vector<Datum>> build_codes(std::unique_ptr<const data::Node<std::pair<Datum, u64>>>& tree);
+		
 	}
 }
 

@@ -92,7 +92,7 @@ TEST_CASE("Bit Grouper Encoding") {
 
 	decode(buffer2.source(), bitgrouper, buffer3.destination());
 
-	REQUIRE(buffer.data()->begin()[0] == buffer3.data()->begin()[0]);
+	REQUIRE(buffer.data()->begin()[0] == buffer3.data()->begin()[0]);	
 	REQUIRE(buffer.data()->back() == buffer3.data()->back());
 
 
