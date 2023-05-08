@@ -91,6 +91,345 @@ TEST_CASE("Huffman encode 2") {
 	auto combiner = eof | huffman | group;
 
 	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 2: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 3") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('E');
+	buffer.data()->push_back('S');
+	buffer.data()->push_back('T');
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 3: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 4") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 4: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 5") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 5: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 6") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 6: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 7") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 7: " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 8") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 8 (Integers only): " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 9") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('E');
+	buffer.data()->push_back('S');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('Y');
+	buffer.data()->push_back('Z');
+	buffer.data()->push_back('U');
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+	io::write_bits(4506811, 23, *buffer.destination()->create_output_stream());
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 9 (Combi Char & Integer): " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
+	decode(buffer2.source(), combiner, buffer3.destination());
+
+	REQUIRE(buffer.data()->size() == buffer3.data()->size());
+
+	for (int i = 0; i < buffer.data()->size(); i++) {
+		REQUIRE(buffer.data()->at(i) == buffer3.data()->at(i));
+	}
+}
+
+TEST_CASE("Huffman encode 10") {
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+
+	buffer.data()->push_back('A');
+	buffer.data()->push_back('B');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('E');
+	buffer.data()->push_back('S');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('T');
+	buffer.data()->push_back('Y');
+	buffer.data()->push_back('Z');
+	buffer.data()->push_back('U');
+	io::write_bits(255, 8, *buffer.destination()->create_output_stream());
+
+
+	auto eof = encoding::eof_encoding<256>();
+	auto huffman = encoding::huffman::huffman_encoding<257>();
+	auto group = encoding::bit_grouper<8>();
+	auto combiner = eof | huffman | group;
+
+	encode(buffer.source(), combiner, buffer2.destination());
+	std::cout << "Size of encode Huffman Encode 10 (Char + 8 bits integer): " << buffer2.data()->size() << " and Size before encode: " << buffer.data()->size() << std::endl;
 	decode(buffer2.source(), combiner, buffer3.destination());
 
 	REQUIRE(buffer.data()->size() == buffer3.data()->size());
