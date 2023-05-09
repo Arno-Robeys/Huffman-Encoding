@@ -466,6 +466,7 @@ TEST_CASE("Huffman Encode Helper Function") {
 	else {
 		std::cout << "The string is not the same after decode (Only Huffman)" << std::endl;
 	}
+
 }
 
 TEST_CASE("Huffman encode") {
