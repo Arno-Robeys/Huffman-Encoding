@@ -154,3 +154,52 @@ std::map<Datum, std::vector<Datum>> encoding::huffman::build_codes(std::unique_p
 	build_codes_helper(*tree, prefix, codes);
 	return codes;
 }
+
+bool encoding::huffman::helper_functie_encode(std::string str) {
+
+	std::cout << "-------------------------------------" << std::endl;
+	std::cout << "Original String: " << str << std::endl;
+
+	//Needs buffer for writing, input and output stream
+	io::MemoryBuffer<256> buffer;
+	io::MemoryBuffer<256> buffer2;
+	io::MemoryBuffer<256> buffer3;
+	
+	//Insert string into buffer
+	for (auto& c : str) {
+		buffer.data()->push_back(c);
+	}
+
+	std::cout << "Original Size: " << buffer.data()->size() << std::endl;
+
+	//Encode the string
+	auto huffman = encoding::huffman::create_huffman_implementation(256);
+	huffman->encode(*buffer.source()->create_input_stream(), *buffer2.destination()->create_output_stream());
+
+	std::cout << "Encoded Size: " << buffer2.data()->size() << std::endl;
+
+	//Decode the string
+	huffman->decode(*buffer2.source()->create_input_stream(), *buffer3.destination()->create_output_stream());
+
+	std::cout << "Decoded Size: " << buffer3.data()->size() << std::endl;
+
+	//Add the decoded string to a std::string
+	std::string decoded_string;
+	for (auto& c : *buffer3.data()) {
+		decoded_string += c;
+	}
+	std::cout << "Decoded String: " << decoded_string << std::endl;
+	std::cout << "-------------------------------------" << std::endl;
+
+	//Check if the string is the same as the decoded string
+	if (buffer.data()->size() == buffer3.data()->size()) {
+		for (int i = 0; i < buffer.data()->size(); i++) {
+			if (buffer.data()->at(i) != buffer3.data()->at(i)) {
+				return false;
+			}
+		}
+	}else {
+		return false;
+	}
+
+}

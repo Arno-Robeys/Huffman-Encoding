@@ -25,6 +25,7 @@ namespace encoding {
 
 		std::map<Datum, std::vector<Datum>> build_codes(std::unique_ptr<const data::Node<std::pair<Datum, u64>>>& tree);
 		
+		bool helper_functie_encode(std::string str);
 	}
 }
 

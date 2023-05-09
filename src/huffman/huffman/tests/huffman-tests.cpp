@@ -439,6 +439,35 @@ TEST_CASE("Huffman encode 10") {
 	}
 }
 
+TEST_CASE("Huffman Encode Helper Function") {
+	auto huffmanHelper = encoding::huffman::helper_functie_encode("ABBBBBBTTESTTYZU");
+
+	if (huffmanHelper) {
+		std::cout << "The string is the same after decode (Only Huffman)" << std::endl;
+	}
+	else {
+		std::cout << "The string is not the same after decode (Only Huffman)" << std::endl;
+	}
+
+	auto huffmanHelper2 = encoding::huffman::helper_functie_encode("ABABABABABABABABABABABABABABABABABAB");
+
+	if (huffmanHelper2) {
+		std::cout << "The string is the same after decode (Only Huffman)" << std::endl;
+	}
+	else {
+		std::cout << "The string is not the same after decode (Only Huffman)" << std::endl;
+	}
+
+	auto huffmanHelper3 = encoding::huffman::helper_functie_encode("ABABABABABAB");
+
+	if (huffmanHelper3) {
+		std::cout << "The string is the same after decode (Only Huffman)" << std::endl;
+	}
+	else {
+		std::cout << "The string is not the same after decode (Only Huffman)" << std::endl;
+	}
+}
+
 TEST_CASE("Huffman encode") {
 	io::MemoryBuffer<256> buffer;
 	io::MemoryBuffer<256> buffer2;
