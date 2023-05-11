@@ -23,12 +23,14 @@ namespace {
 			return leaf->get_value();
 		}
 		else if (auto branch = dynamic_cast<const data::Branch<Datum>*>(&node)) {
-			auto bit = input.read();
-			if (bit == 0) {
-				return decode_single_datum(input, branch->get_left_child());
-			}
-			else {
-				return decode_single_datum(input, branch->get_right_child());
+			if (!input.end_reached()) {
+				auto bit = input.read();
+				if (bit == 0) {
+					return decode_single_datum(input, branch->get_left_child());
+				}
+				else {
+					return decode_single_datum(input, branch->get_right_child());
+				}
 			}
 		}
 		return 0;
@@ -95,13 +97,13 @@ std::vector<T> copy_to_vector(io::InputStream& input) {
 }
 
 Datum weight(data::Node<std::pair<Datum, u64>>& node) {
-	if (dynamic_cast<data::Leaf<std::pair<Datum, u64>>*>(&node) != nullptr) {
-		return dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)->get_value().second;
+	if (auto leaf = dynamic_cast<data::Leaf<std::pair<Datum, u64>>*>(&node)) {
+		return leaf->get_value().second;
 	}
-	else if(dynamic_cast<data::Branch<std::pair<Datum, u64>>*>(&node) != nullptr) {
-		auto right = dynamic_cast<data::Branch<std::pair<Datum, u64>>*>(&node)->get_right_child();
-		auto left = dynamic_cast<data::Branch<std::pair<Datum, u64>>*>(&node)->get_left_child();
-		return weight(right) + weight(left);
+	else if (auto branch = dynamic_cast<data::Branch<std::pair<Datum, u64>>*>(&node)) {
+		auto right = &branch->get_right_child();
+		auto left = &branch->get_left_child();
+		return weight(*right) + weight(*left);
 	}
 }
 

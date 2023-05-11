@@ -11,7 +11,7 @@ namespace encoding  {
 					output.write(0);
 					io::write_bits(leaf->get_value(), numberOfBitsPerDatum, output);
 				}
-				else if (const data::Branch<Datum>* branch = dynamic_cast<const data::Branch<Datum>*>(&tree)) {
+				if (const data::Branch<Datum>* branch = dynamic_cast<const data::Branch<Datum>*>(&tree)) {
 					//If tree is a branch, write 1 and then recursively encode its children
 					output.write(1);
 					encode_tree(branch->get_left_child(), numberOfBitsPerDatum, output);

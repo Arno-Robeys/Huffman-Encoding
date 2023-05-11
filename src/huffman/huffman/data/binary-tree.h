@@ -26,7 +26,15 @@ namespace data {
 				return *left_child;
 			}
 
+			Node<T>& get_left_child() {
+				return *left_child;
+			}
+
 			const Node<T>& get_right_child() const {
+				return *right_child;
+			}
+
+			Node<T>& get_right_child() {
 				return *right_child;
 			}
 
