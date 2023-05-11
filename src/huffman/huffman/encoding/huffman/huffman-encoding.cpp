@@ -7,12 +7,14 @@
 namespace {
 
 	std::unique_ptr<data::Node<Datum>> build_writeable_tree(const data::Node<std::pair<Datum, u64>>& node) {
+		typedef std::unique_ptr<data::Node<Datum>> NodePtr;
+
 		if (auto leaf = dynamic_cast<const data::Leaf<std::pair<Datum, u64>>*>(&node)) {
 			return std::make_unique<data::Leaf<Datum>>(leaf->get_value().first);
 		}
 		else if (auto branch = dynamic_cast<const data::Branch<std::pair<Datum, u64>>*>(&node)) {
-			std::unique_ptr<data::Node<Datum>> left = build_writeable_tree(branch->get_left_child());
-			std::unique_ptr<data::Node<Datum>> right = build_writeable_tree(branch->get_right_child());
+			NodePtr left = build_writeable_tree(branch->get_left_child());
+			NodePtr right = build_writeable_tree(branch->get_right_child());
 			return std::make_unique<data::Branch<Datum>>(std::move(left), std::move(right));
 		}
 		return nullptr;
