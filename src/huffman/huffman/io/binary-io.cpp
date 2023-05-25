@@ -1,11 +1,13 @@
 #include "binary-io.h"
+#include <cassert>
+#include <limits>
 
 namespace io {
 
-    u64 read_bits(unsigned nbits, InputStream& input) {
+    u64 read_bits(u64 nbits, InputStream& input) {
 		
 		u64 result = 0;
-		for (unsigned i = 0; i < nbits; i++) {
+		for (u64 i = 0; i < nbits; i++) {
 				result <<= 1;
 				result |= input.end_reached() ? 0 : input.read();
 		}
@@ -13,11 +15,11 @@ namespace io {
 
     }
 
-	void write_bits(u64 value, unsigned nbits, io::OutputStream& output) {
-		
-		for (int i = nbits - 1; i >= 0; i--) {
-			output.write((value >> i) & 1);
+	void write_bits(u64 value, u64 nbits, io::OutputStream& output) {
+		for (u64 i = nbits; i > 0; --i) {
+			output.write((value >> (i - 1)) & 1);
 		}
 	}
+
 	
 }

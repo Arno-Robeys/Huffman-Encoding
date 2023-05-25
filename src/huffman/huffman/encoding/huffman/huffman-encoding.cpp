@@ -107,6 +107,7 @@ Datum weight(data::Node<std::pair<Datum, u64>>& node) {
 		auto left = &branch->get_left_child();
 		return weight(*right) + weight(*left);
 	}
+	return 0;
 }
 
 bool weight_comperator(const std::unique_ptr<data::Node<std::pair<Datum, u64>>>& left, const std::unique_ptr<data::Node<std::pair<Datum, u64>>>& right) {
@@ -205,5 +206,5 @@ bool encoding::huffman::helper_functie_encode(std::string str) {
 	}else {
 		return false;
 	}
-
+	return true;
 }

@@ -37,6 +37,7 @@ namespace encoding  {
 						return std::make_unique<data::Branch<Datum>>(std::move(left), std::move(right));
 					}
 				}
+				return nullptr;	
 			}
 	}
 
